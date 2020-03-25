@@ -36,23 +36,23 @@ inline fun measureTimeMillis(typeSort:SortAlgorithm, size: Int, block: () -> Lon
     return out
 }
 
-
 fun getTime(millis: Long): String = String
     .format("%02d:%02d:%02d:%04d",
         TimeUnit.MILLISECONDS.toHours(millis),
         TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
         TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)),
-        millis - TimeUnit.MILLISECONDS.toSeconds(TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)))
+        TimeUnit.MILLISECONDS.toMillis(millis)  - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(millis))
         )
 
 
 fun main(){
-    val n = 6
+    val n = 7
     val nSizes = Array(n){ (10.toFloat()).pow(it+1).toInt() }
 
     val bestCase = nSizes.sort("best case",InsertionSort){num:Int -> num + 1L}
     val randomCase = nSizes.sort("random case",InsertionSort){ Random.nextLong(nSizes.size.toLong()) }
     val worstCase = nSizes.sort("worst case",InsertionSort){pos -> (nSizes.size - pos).toLong() }
+
 
     println("The best cases has taken ${bestCase.toList()} steps")
     println("The random cases has took ${randomCase.toList()} steps")
