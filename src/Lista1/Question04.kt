@@ -1,11 +1,11 @@
-package sort
+package Lista1
 
 import java.util.concurrent.TimeUnit
 import kotlin.math.log10
 import kotlin.math.pow
 import kotlin.random.Random
 
-inline fun <reified T> Array<Int>.sort(nameCase: String, sort: SortAlgorithm, reverse: Boolean = false , noinline init: (Int) -> T): Array<Long>
+inline fun <reified T> Array<Int>.sort(nameCase: String, sort: SortAlgorithm, reverse: Boolean = false, noinline init: (Int) -> T): Array<Long>
         where T: Number, T: Comparable<T>
 {
     println("Starting ${sort.getName()} for $nameCase")
@@ -30,7 +30,7 @@ inline fun <reified T> Array<Int>.sort(nameCase: String, sort: SortAlgorithm, re
     return arr
 }
 
-inline fun measureTimeMillis(typeSort:SortAlgorithm, size: Int, block: () -> Long): Long {
+inline fun measureTimeMillis(typeSort: SortAlgorithm, size: Int, block: () -> Long): Long {
 
     println("Executing ${typeSort.getName()} for n = $size ... ")
 
@@ -57,9 +57,9 @@ fun main(){
 
     println("nSizes = ${nSizes.toList()}")
 
-    val bestCase = nSizes.sort("best case",SelectionSort){ pos ->  pos + 1L }
-    val randomCase = nSizes.sort("random case",SelectionSort){ pos -> Random.nextLong(pos.toLong()+1L)  }
-    val worstCase = nSizes.sort("worst case",SelectionSort,true){ pos -> pos + 1L }
+    val bestCase = nSizes.sort("best case", SelectionSort){ pos ->  pos + 1L }
+    val randomCase = nSizes.sort("random case", SelectionSort){ pos -> Random.nextLong(pos.toLong()+1L)  }
+    val worstCase = nSizes.sort("worst case", SelectionSort,true){ pos -> pos + 1L }
 
     println("The best cases has taken ${bestCase.toList()} steps")
     println("The random cases has took ${randomCase.toList()} steps")
