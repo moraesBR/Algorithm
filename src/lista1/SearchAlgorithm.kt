@@ -1,4 +1,4 @@
-package Lista1
+package lista1
 
 abstract class SearchAlgorithm {
     abstract fun <T> search(arr: Array<T>, key: T): Answer where T:Number, T:Comparable<T>

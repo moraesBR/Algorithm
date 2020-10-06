@@ -1,4 +1,4 @@
-package Lista1
+package lista1
 
 abstract class SortAlgorithm {
     abstract fun <T> sort(arr: Array<T>): Long where T:Number, T:Comparable<T>

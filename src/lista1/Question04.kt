@@ -1,8 +1,8 @@
-package Lista1
+package lista1
 
 import java.util.concurrent.TimeUnit
-import kotlin.math.log10
-import kotlin.math.pow
+/*import kotlin.math.log10
+import kotlin.math.pow*/
 import kotlin.random.Random
 
 inline fun <reified T> Array<Int>.sort(nameCase: String, sort: SortAlgorithm, reverse: Boolean = false, noinline init: (Int) -> T): Array<Long>
@@ -13,6 +13,8 @@ inline fun <reified T> Array<Int>.sort(nameCase: String, sort: SortAlgorithm, re
     val start = System.currentTimeMillis()
     val arr = Array(this.size){ 0L }
 
+    var index = 0
+
     this.forEach {
         var vector = Array(it, init)
 
@@ -20,8 +22,9 @@ inline fun <reified T> Array<Int>.sort(nameCase: String, sort: SortAlgorithm, re
             vector = vector.asList().asReversed().toTypedArray()
 
         println("Array = ${vector.asList()}")
-        val index = log10(it.toDouble()).toInt() - 1
-        arr[index] = measureTimeMillis(sort,it) { sort.sort(vector) }
+        //val index = log10(it.toDouble()).toInt() - 1
+
+        arr[index++] = measureTimeMillis(sort,it) { sort.sort(vector) }
 
     }
 
@@ -52,16 +55,22 @@ fun getTime(millis: Long): String = String
 
 
 fun main(){
-    val n = 4
-    val nSizes = Array(n){ (10.toFloat()).pow(it+1).toInt() }
+    val n = 2
+    //val nSizes = Array(n){ (10.toFloat()).pow(it+1).toInt() }
+    val nSizes = Array(n){ 10 + 10*it }
 
     println("nSizes = ${nSizes.toList()}")
 
     val bestCase = nSizes.sort("best case", SelectionSort){ pos ->  pos + 1L }
-    val randomCase = nSizes.sort("random case", SelectionSort){ pos -> Random.nextLong(pos.toLong()+1L)  }
+    val randomCase = nSizes.sort("random case", SelectionSort){ Random.nextLong(1000L)  }
     val worstCase = nSizes.sort("worst case", SelectionSort,true){ pos -> pos + 1L }
 
     println("The best cases has taken ${bestCase.toList()} steps")
     println("The random cases has took ${randomCase.toList()} steps")
     println("the worst cases has took ${worstCase.toList()} steps")
+
+    val map = nSizes.zip(bestCase.zip(randomCase.zip(worstCase))).toMap()
+    println("N;Best;Random;Worst")
+    map.asSequence().map{ println("${it.key};${it.value.first};${it.value.second.first};${it.value.second.second}")}.toList()
+
 }
